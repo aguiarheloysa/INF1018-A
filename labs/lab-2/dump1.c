@@ -62,5 +62,18 @@ int main (void) {
   printf("-------testando com um novo valor-------\n");
   char p[] = "7509";
   dump(p, sizeof(p));
+//   comando para compilar: gcc -Wall -o <nome do executavel> <nomedo arq fonte>
+// comando para executar: ./<nome do executavel>
+
+// 1- A memória é um array de bits. Alguns tipos de declaração de variável irão armazenar valores diferentes porque cada tipo representa bytes diferentes. Ao executar uma chamada dump, o while vai printar bit a bit, como podemos ver nas execuções a seguir:
+
+// a) um inteiro é representado por 4 bytes, ou seja, na memória, 
+// ele é representado por 32bits, mas esses dados são armazenados como binário (0 e 1)
+
+// b) um long é representado por 8 bytes, ou seja, na memória ele é representado por 32 bits ou 64 bits se for little endian, mas esses dados são armazenados como binário (0 e 1)
+
+// c) um short ocupa 2 bytes, ele é utilizado para armazenar valores pequenos. Na memória, é representado por 16 bits, mas esses dados são armazenados como binário (0 e 1)
+
+// d) um char é representad por 
   return 0;
 }
