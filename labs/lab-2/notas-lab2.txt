@@ -1,0 +1,39 @@
+1- A memória é um array de bits, e um byte é formado por 8 bits. 
+Alguns tipos de declaração de variável irão armazenar valores diferentes porque cada tipo representa bytes diferentes. A base hexadecimal consegue representar as combinações possíveis de 4 bits (0000 e 1111). Em programação em C, quando tentamos acessar um endereço de memória que não foi alocado dinamicamente para nós, ocorre um erro, e esse erro aparece em hexadecimal, ou seja, esse valor em hexa representa o endereço de memório onde ocorreu o erro.
+
+Ao executar uma chamada dump, o while vai printar bit a bit, como podemos ver nas execuções a seguir:
+
+O meu processador é intel, então seguirá o padrão Little Endian.Ou seja, o byte menos significativo é gravado primeiro.
+
+a) um inteiro é representado por 4 bytes (32bits). Testemos o valor 10000 corresponde em hexadecimal a 2710. 10 é o menos significativo, então, o print exibe exatamente: 10 27 00 00. Os 00 representam espaços preenchidos, porque o inteiro escolhido é muito pequeno. Testemos então o seguinte valor: int a = 2147483646 e obtemos a seguinte conversão em hexa: 7f ff ff ff, o resultado printado seguirá o padrão Little  Endian: ff ff ff 7f
+
+b) um long é representado por 8 bytes (64 bits), ele é utilizado para armazenar valores muito grandes. 
+Testemos o valor long 9223372036854775807, a conversão em hexa é: 7FFFFFFFFFFFFFFF, o resultado printado será: ff ff ff ff ff ff ff 7f. 
+Agora vamos testar o maior valor armazenado com sinal negativo: -9223372036854775807 corresponde, em hexadecimal, 80 00 00 00 00 00 00 01, e será printado do byte menos significativo: 01 00 00 00 00 00 00 80.
+
+c) um short ocupa 2 bytes (16 bits), ele é utilizado para armazenar valores pequenos. Testemos o valor short 32767, a conversão em hexadecimal é: 7fff, a saída do dump exibirá ff 7f (Little Endian).
+Testemos outro valor: -32765, a conversão em hexa é 8003 a saída exibirá 0380.
+
+d) um char é representado por 1 byte (8 bits), então, será exibido apenas uma linha de código. É preciso lembrar sobre a tabela ASCII que todo caracter (simbolos, numeros, letras, espaço, quebra de linha) possui uma codificação numérica para representá-lo. Então, ao printar um caracter do tipo char, veremos exatamente esse valor associado/correspondente da tabela ASCII. Esse valor numérico será convertido em hexadecimal, e será printado na tela.
+Após sabermos disso, iremos testar os seguintes valores: 'a' e '97'
+'a' corresponde, em hexadecimal, a 61.
+'97' deu overflow. warning: overflow in conversion from ‘int’ to ‘char’ changes value from ‘14647’ to ‘55’ [-Woverflow]
+testemos, então, char c1 = 97; ele pegou o número 97 e verificou a correspondência na tabela ASCII, que é o próprio a. E obtivemos o mesmo resultado: 61.
+
+e) uma string é um vetor de char com o '\0' no final para identificarmos o fim da string (toda string termina em '\0'). Ao testar a string char p[] = "7509" tem 5bytes (40bits) verificamos cinco elementos (o '\0' está ali, mas não explicitamente). Dessa forma, a saída do dump exibirá 5 linhas, sempre (no meu caso) do dígito menos significativo. A conversão, em hexa, é 37 35 30 39 00.
+Testemos o seguinte: "heloysa" que possui 8bytes (64 bits), a conversão, em hexadecimal, é: 68 65 6c 6f 79 73 61 00
+É possível notar que quando tratamos de array de char ou char, é sempre armazenado na ordem crescente de conversão. Então, o primeiro é 'h', depois 'e', e assim sucessivamente, pois os valores precisam ser armazenados na memória sequencialmente.
+
+',' corresponde, em hexadecimal, a 2c
+'A' corresponde, em hexadecimal, a 41
+' ' corresponde, em hexadecimal, a 20
+'\n' corresponde, em hexadecimal, a 0a
+'$  corresponde, em hexadecimal, a 24
+
+2) A função string2num converte um array de char que contem digitos numericos em um valor inteiro (int). Ela faz isso subtraindo o correspondente daquele valor na tabela ASCII com o '0' que é o primeiro número. Isso é equivalente a subtrairmos 9-0, continua sendo 9, só queconvertido em inteiro, já que caracteres são representados como valor inteiro na tabela. O mecanismo responsável por essa "conversão" é exatamente o int a e a linha a = a*10 + (*s - '0'); o for percorre o vetor, e cada elemento é convertido do início ao fim.
+
+a) o valor de a é acumulado a cada iteração. No primeiro loop, a vale 0 e é somado com 1-0, entao passa a ser 1. Na iteração seguinte, a vale 1 e é multipicado por 10 e somado com a distancia do segundo caracter até o 0. 1*10 + (valor correspondente do segundo caracter da tabela ASCII menos o valor correspondente de 0 na tabela ASCII. Podemos notar que a cada iteração esse valor é acumulado e após a iteração acabar, o a é retornado. Nas última chamada, há mais de uma instancia de string2num dentro do print, a lógica continua quase a mesma, a diferença é que a primeira chamada é executada e a segunda entra na pilha de execução. Quando a  primeira terminar de executar, o valor de a é retornado e a segunda execução começa. Após as execuções acabarem, os valores são somados e printados na main.
+
+b)As modificações feitas foram criar três novas variáveis para calcular o resto, multiplicador para estabelecer a conversão correta em unidade, dezena, centena e milhar, e o ret que é o retorno da conversão. Primeiro pegamo o resto depis salvamos na ret que é a soma + resto multiplicado pelo multiplicador e depois atualizamos a variavel a com o novo valor da divisão. Esse loop vai continuar até que a seja maior que 0.
+
+c)As modificações feitas agora incluem verificar se o caracter é digito ou não, com base nisso, é calculado a conversão para qualquer base.
