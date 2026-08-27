@@ -8,11 +8,11 @@ O meu processador é intel, então seguirá o padrão Little Endian.Ou seja, o b
 a) um inteiro é representado por 4 bytes (32bits). Testemos o valor 10000 corresponde em hexadecimal a 2710. 10 é o menos significativo, então, o print exibe exatamente: 10 27 00 00. Os 00 representam espaços preenchidos, porque o inteiro escolhido é muito pequeno. Testemos então o seguinte valor: int a = 2147483646 e obtemos a seguinte conversão em hexa: 7f ff ff ff, o resultado printado seguirá o padrão Little  Endian: ff ff ff 7f
 
 b) um long é representado por 8 bytes (64 bits), ele é utilizado para armazenar valores muito grandes. 
-Testemos o valor long 9223372036854775807, a conversão em hexa é: 7FFFFFFFFFFFFFFF, o resultado printado será: ff ff ff ff ff ff ff 7f. 
-Agora vamos testar o maior valor armazenado com sinal negativo: -9223372036854775807 corresponde, em hexadecimal, 80 00 00 00 00 00 00 01, e será printado do byte menos significativo: 01 00 00 00 00 00 00 80.
+Testemos o valor long 9223372036854775807, a conversão em hexa é: 7F FF FF FF FF FF FF FF, o resultado printado será: ff ff ff ff ff ff ff 7f. 
+Agora vamos testar o maior valor armazenado com sinal é: 8223372036854775807 corresponde, em hexadecimal, 72 1F 49 4C 58 9B FF FF, e será printado do byte menos significativo: FF FF 9B 58 4C 49 1F 72.
 
 c) um short ocupa 2 bytes (16 bits), ele é utilizado para armazenar valores pequenos. Testemos o valor short 32767, a conversão em hexadecimal é: 7fff, a saída do dump exibirá ff 7f (Little Endian).
-Testemos outro valor: -32765, a conversão em hexa é 8003 a saída exibirá 0380.
+Testemos outro valor: 32700, a conversão em hexa é 7FBC a saída exibirá 7FBC.
 
 d) um char é representado por 1 byte (8 bits), então, será exibido apenas uma linha de código. É preciso lembrar sobre a tabela ASCII que todo caracter (simbolos, numeros, letras, espaço, quebra de linha) possui uma codificação numérica para representá-lo. Então, ao printar um caracter do tipo char, veremos exatamente esse valor associado/correspondente da tabela ASCII. Esse valor numérico será convertido em hexadecimal, e será printado na tela.
 Após sabermos disso, iremos testar os seguintes valores: 'a' e '97'
