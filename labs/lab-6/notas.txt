@@ -1,0 +1,12 @@
+.data é onde iremos endereçar uma constante ou um label;
+nums é nome;
+.int reserva um espaço de 4 bytes na memória e insere os valores nesse espaço;
+Sf é a formatação? porque em C vemos que o vetor possui números inteiros, em assembly discutimos um pouco sobre bit mais significativo que vai representar o sinal.
+.text é onde ficam as instruções, nesse caso a função global main;
+movl $0, %ebx é uma instrução de cópia  de um valor, nesse caso 0, de origem de uma constante para  um registrador de 32 bits, nesse caso ebx, ou seja, zeramos o registrador ebx; 
+movq $nums, %r12 é uma instrução de cópia de um ENDEREÇO do array, nesse caso, nums, para o registrador de 64 bits/8bytes;
+cmpl  $4, %ebx condição a ser verificada, ou seja, se o registrador tem 4 bytes se for verdadeira, então vai para o segundo label;
+movl  (%r12), %eax o endereço do registrador eax é copiado/vai apontar para o endereço do registrador r12;
+addl  $1, %ebx  ebx é somado/incrementado em 1 long ou 4 bytes nesse registrador;
+addq avança o ponteiro r12 em 4 bytes, ou seja, como r12 guarda o endereço de nums, essa linha está avançando de 4 em 4bytes, isso significa andar com o ponteiro em r12; 
+jmp  L1 volta para a linha de comando L1/bloco L1;
