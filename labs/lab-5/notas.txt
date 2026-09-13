@@ -1,0 +1,30 @@
+1) a variável b foi declarada como vetor do tipo inteiro que possui dois elementos. Todo elemento do array é armazenado na memória sequencialmente, ou seja, o agrupamento é feito no endereço múltiplo de seu tipo. Como sabemos que b é do tipo inteiro, se fizermos o sizeof(b) iremos visualizar o tamanho 8, ou seja, é a quantidade de elementos ou a dimensão do vetor multiplicado por seu tipo. 2 (elementos) *4 (um inteiro tem 4bytes) = 8bytes
+
+b) a variável a foi declarada como vetor bidimensional do tipo short que possui 2 linhas e 3 colunas. Como sabemos que a é do tipo short e que o tipo short possui tamanho de 2 bytes na memória, se fizermos o sizeof de a, vamos visualizar como resposta 12bytes, porque (2*3)* 2 (tipo da variável) = 12bytes
+
+Usando a função dump do lab2:
+vemos que a variável b possui um endereço em hexadecimal que começa em 00 e termina em 4e. A execução mostrou 8 linhas, cada linha representa 1 byte e o seu endereço.
+Também visualizamos a execução da variável a, que ocorre quase da mesma forma, a única diferença é o tamanho (quantidade de bytes a serem impressos). 
+
+2) A struct X possui elementos de tipo diferentes. Sabemos que um campo de uma estrutura só pode iniciar em um endereço múltiplo de seu tipo, então, quando temos um inteiro, sabemos que esse elemento só pode ser inserido em endereço múltiplo de 4. Um elemento do tipo char, pode ser inserido em qualquer endereço porque um char tem tamanho de 1 byte, e 1 é múltiplo de todos os números. Com isso, observamos uma regra importante em estruturas, todos os elementos precisam começar em um endereço de seu múltiplo. Quando temos uma estrutura com tipos diferentes, é possível termos padding, que é um espaço em branco que não será utilizado pela struct, mas que precisa existir para que cada campo obedeça a regra de ser inserida em endereço de seu múltiplo.
+A struct X possui 12 bytes ainda que tenhamos duas variáveis do tipo 1 e uma do tipo short, estamos condicionados a pensar que o tamanho ocupado será de 10bytes porque 2*4bytes + 2bytes = 10, mas a maneira como os elementos estão organizados na estrutura faz toda diferença. Um inteiro pode começar em um endereço múltiplo de 4, temos um short que só pode começar em um endereço múltiplo de 2, e por fim temos outro inteiro que também só pode começar em múltiplo de 4; Quando fizermos o sizeof X, vamos notar que o tamanho é 12 porque temos 2 paddings entre o short e o último elemento inteiro;
+
+Após atribuirmos valores na estrutura x:
+
+o dump printa byte a byte, e os endereços da memória agora possuem valores porque nós atribuímos. A execução do dump mostrou 2 paddings, que podemos confirmar comparando com a primeira chamada da função dump, isto é, sem a atribuição de valores. Os endereços são mostrados após exibir os valores atribuídos a variável short, e após printa os valores atribuídos ao inteiro. Com esses dois exemplos verificamos como uma estrutura está armazenada na memória, e que o padding pode ocorrer dependendo de como a estrutura está organizada, de como foi criada.
+
+3) a) X1 char c1 possui 1 byte, portanto pode ocupar qualquer posição da memória. O int i possui 4bytes, então é necessário que o i esteja em endereço múltiplo de 4, isso ocasiona inserir 3 paddings após o c1. O char c2 ocupa 1 byte na memória, então pode ser inserido em qualquer posição, mas terá 3 paddings porque a estrutura precisa estar alinhada, totalizando o tamanho de 12bytes na memória.
+
+b) X2 long l possui 8bytes, char c possui 1byte. Como a estrutura precisa estar alinhada,após o char serão inseridos 7 paddings, totalizando o tamanho de 16 bytes na memória.
+
+c) X3 int i possui 4bytes, char c1 possui 1 byte, char c2 possui 1 byte. Após o último char será inserido 2 paddings para que a estrutura fique alinhada, totalizando o tamanho de 8 bytes na memória.
+
+d) X4 x é uma struct X2 que possui 16 bytes na memória, char c possui 1 byte. Após o último char, será inserido 7 paddings porque o próximo endereço precisa ser múltiplo de 16, dessa forma teremos o tamanho de 24bytes na memória.
+
+e) X5 char c1 possui 1byte, char c2 possui 1byte, char c3 possui 1byte todos podem ser incluídos em qualquer endereço de memória porque 1 é múltiplo de qualquer número. Dessa forma, teremos o tamanho de 3bytes na memória.
+
+f) X6 short s1 possui 2 bytes, int i possui 4 bytes, char c[3] possui 3byte, short s2 possui 2bytes. Após s1 serão inseridos 2 paddings, após c[3] será inserido 1 padding, após s2 serão inseridos 2 paddings para alinhar a estrutura. Dessa forma teremos o tamanho de 16bytes na memória.
+
+g) Union U1 possui um elemento int i que possui 4 bytes e um vetor char c[5] que possui 5bytes. A union é diferente da struct porque os elementos são sobrescritos, ou seja, atribuir valores ao inteiro e depois ao char fará com que o char sobrescreva o endereço de i porque eles compartilham o mesmo espaço de memória. Como int só pode ser armazenado em endereços múltiplos de 4 enquanto o char pode ser armazenado em qualquer endereço, o tamanho da union será de 8 bytes, ainda que o maior espaço ocupado seja pelo char c, se for atribuirmos algum valor inteiro, será necessário armazenar em endereços que são múltiplos de 4, ou seja, serão inseridos 3 paddings na memória para que o inteiro possa ser armazenado no próximo endereço.
+
+h) Union U2 possui um elemento short que possui 2bytes e um vetor char c[5] que possui 5bytes. Na union, os elementos compartilham o mesmo endereço de memória, e isso faz com que ao instanciar valores eles sejam sobrescritos. Ao inserir um valor short e em seguida um valor ao char, se printarmos a union não veremos o valor atribuído a variável short, pois esta foi sobrescrita pelo array char c. Sabendo disso, o maior tamanho é do vetor c, e sabemos que um short só pode ser armazenado em endereço múltiplo de 2, dessa forma, será inserido um padding para alinhar a estrutura, isto é, a variável short sobrescrever o endereço atribuído a algum valor de char c. Portanto, o tamanho dessa union será de 6bytes.
