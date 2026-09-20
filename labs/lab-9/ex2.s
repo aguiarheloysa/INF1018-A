@@ -1,8 +1,9 @@
-; int fat (int n) {
-;   if (n==0) return 1;
-;   else return n*fat(n-1);
-; }
-
+/*
+ int fat (int n) {
+   if (n==0) return 1;
+   else return n*fat(n-1);
+ }
+*/
 .text
 
 .globl fat
@@ -12,7 +13,7 @@ fat:
     pushq %rbp
     movq  %rsp, %rbp
 
-    cmpb $1, (%edi)
+    cmpl $1, %edi
     jle L1 /* jump if less or equal */
     jmp L2
 L1:
