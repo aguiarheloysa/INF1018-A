@@ -41,6 +41,13 @@ struct X6 {
   short s2;
 };
 
+struct x7 {
+  char c;
+  short s;
+  short *p;
+  int i;
+};
+
 union U1 {
   int i;
   char c[5];
@@ -148,26 +155,35 @@ int main (void){
     // printf("estrutura X6 preenchida- %ld\n", sizeof(x6));
     // dump(&x6, sizeof(x6));
 
-    union U1 u1;
-    printf("union u1 de tamanho %ld\n", sizeof(u1));
-    dump(&u1, sizeof(u1));
-    u1.i = 0x01020304;
+    struct x7 s7;
+    s7.c = 'a';
+    s7.s = 12;
+    s7.p = &s7.s;
+    s7.i = -20;
+    printf("struct s de tamanho %ld\n", sizeof(s7));
+    printf("tamanho de ponteiro p: %ld\n", sizeof(s7.p));
+    dump(&s7, sizeof(s7));
+
+    // union U1 u1;
+    // printf("union u1 de tamanho %ld\n", sizeof(u1));
+    // dump(&u1, sizeof(u1));
+    // u1.i = 0x01020304;
     // u1.c[0] = 0xc1;
     // u1.c[1] = 0xc2;
     // u1.c[2] = 0xc3;
     // u1.c[3] = 0xc4;
     // u1.c[4] = 0xc5;
-    printf("union u1 de tamanho %ld\n", sizeof(u1));
-    dump(&u1, sizeof(u1));
-    union U2 u2;
-    u2.s = 0x0102;
-    u1.c[0] = 0xc1;
-    u2.c[1] = 0xc2;
-    u2.c[2] = 0xc3;
-    u2.c[3] = 0xc4;
-    u2.c[4] = 0xc5;
-    printf("union u2 de tamanho %ld\n", sizeof(u2));
-    dump(&u2, sizeof(u2));
+    // printf("union u1 de tamanho %ld\n", sizeof(u1));
+    // dump(&u1, sizeof(u1));
+    // union U2 u2;
+    // u2.s = 0x0102;
+    // u1.c[0] = 0xc1;
+    // u2.c[1] = 0xc2;
+    // u2.c[2] = 0xc3;
+    // u2.c[3] = 0xc4;
+    // u2.c[4] = 0xc5;
+    // printf("union u2 de tamanho %ld\n", sizeof(u2));
+    // dump(&u2, sizeof(u2));
 
     return 0;
 }
