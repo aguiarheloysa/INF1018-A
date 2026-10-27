@@ -1,0 +1,41 @@
+NAO TEM COMPLEMENTO A DOIS EM PONTO FLUTUANTE
+BASE 10
+12.34 -> 1.234* 10^1
+123.4 -> 1.234* 10^2
+0.001234 -> 1.234*10^-3 negativo porque é menor que 0
+0.0001 -> 1.0*10^-4
+
+FRACIONÁRIOS
+BASE 10
+12.34 -> 1*10^1 + 2*10^0 + 3*10^-1 + 4*10^-2
+
+BASE 2
+101.11 :
+parte antes da virgula: 1* 2^2 + 0*2^1 + 1*2^0
+parte decimal: 1*2^-2 + 1*2^-1
+
+decimal para binario
+parte antes da vírgula: dividir por 2,
+parte decimal: multiplicar sucessivamente por 2
+25.625 ->
+25 na base 10 = 11001 na base 2, ou seja, basta dividir por 2 sucessivamente
+0.625 *2 = 1.25 (1 é o primeiro bit)
+0.25 *2 = 0.5 (0 é o segundo bit)
+0.5 *2 = 1.0 (1 é o terceiro bit)
+0.0*2 = 0.0 
+logo a representação de 25.625 em binario é: 11001.101
+
+Para representarmos numeros é imporyante sabermos se é positivo ou negativo
+positivo: o nosso bit s é 0
+negativo: o nosso bit s é 1
+
+Representação de float:
+0.3 -> 0.3*2 = 0.6 (0 é o primeiro bit)
+0.6* 2 = 1.2 (1 é o segundo bit)
+0.2* 2 = 0.4 (0 é o terceiro bit)
+0.4* 2 = 0.8 (0 é quarto bit)
+0.8* 2 = 1.6 (1 é o quinto bit)
+1.6* 2= 1.2 (1 é sexto bit)
+e começa a repetir
+logo, 0.3 = 0.0100110011
+
