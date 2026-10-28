@@ -49,14 +49,15 @@ unsigned char codigo[] = {
 };
 
 int main(void){
+    
     execpage(codigo, sizeof(codigo));
     int pos_call = 4;
+
     unsigned char *end_add = (unsigned char *)&add;
     unsigned char *end_seguinte = &codigo[pos_call + 5];
     
     int desloc = (int)(end_add - end_seguinte);
     *(int *)&codigo[pos_call + 1] = desloc;
-    printf("desloc - %d\n", desloc);
 
     funcp f = (funcp) codigo;
     int i = f(10);
