@@ -1,0 +1,125 @@
+SSE:
+16 registradores %xmm0 até %xmm15
+
+double foo (float f, int i, double d):
+primeiro parametro real: %xmm0
+primeiro parametro inteiro: %edi
+segundo parametro real: %xmm1
+o valor de retorno de uma funcao que retorna real é sempre %xmm0
+
+movss : 
+1º s operação escalar
+2º s float ou 
+movsd:
+1º s operação escalar
+2º d que é de double 
+
+
+float boo (float *a)
+a é inteiro, ele aponta para a memoria
+o conteudo apontado por a que é um numero float!!!!!!
+movss (%rdi), %xmm0
+
+conversoes de dados entre double e float:
+cvtss2sd: 2 representa TO
+1ºs: escalar
+2ºs: float
+3ºs: escalar
+4ºd: double (precisão)
+
+cvtsd2ss: 
+converte (cvt) 
+1ºs: escalar
+2ºd: double
+O 2representa TO tradição para
+3ºs: escalar
+4ºs: float
+
+
+double foo (float f)
+return (double f)
+cvtss2sd %xmm0, %xmm0
+o valor de retorno é sempre armazenado no registrador %xmm0
+
+
+cvtsi2ss
+1ºs: escalar
+2ºi: inteiro
+3ºs: escalar
+4ºs: float
+
+
+cvtsi2sd:
+1ºs: escalar
+2ºi: inteiro
+3ºs: escalar
+4ºd: double
+
+
+cvtsi2ssq: lê se converter um escalar inteiro quad para um escalar float
+1ºs: escalar
+2ºi: inteiro
+3ºs:escalar
+4ºs:float
+5ºq: quad (64bits)
+
+conversao c truncamento (pt flutuante para inteiro): perda de precisao
+cvttss2si:
+1ºs: escalar
+2ºs: float
+2: para
+3ºs: escalar
+4ºi: inteiro
+int foo (double d){
+    return (int) d;
+}
+foo :
+cvttsd2si %xmm0, %eax
+ret
+
+cvttsd2si:
+1ºs: escalar
+2ºd: double
+2: TO
+3ºs: escalar
+4º i: intieiro
+
+int boo (float*a){
+    return (int)*a; ponteiro para inteiro cujo conteudo armazena float
+}
+
+boo:
+cvttss2si (%rdi), %eax
+ret
+
+cvttss2siq
+1ºs: escalar
+2ºs: float
+2: TO
+3ºs: escalar
+4º i: inteiro quad (64 bits)
+long boo(float*a){
+    return (long) *a;
+}
+boo:
+cvttss2siq (%rdi), %rax
+ret
+
+cvttsd2siq
+1ºs: escalar
+2ºd: double
+2: TO
+3ºs: escalar
+4º i: inteiro quad (64 bits)
+
+long foo( double d){
+    return (long) d;
+}
+foo:
+cvvttsd2siq %xmm0, %rax
+ret
+
+ucomiss u representa unorder e nao unsigned
+
+
+
