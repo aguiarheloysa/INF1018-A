@@ -29,34 +29,56 @@ float float2(float f){
 
 float int2float(int i){
     U u1;
-    U u2;
+    unsigned int val;
+    int e= 31; //valor do bit mais significativo
     
-    if (i = 0){
-        return u1.f = 0;
+    if (i == 0){
+        u1.i = 0;
+        return u1.f;
     }
-    int bit_s;
+    int bit_s = 0;
     if (i<0){
         bit_s = 1;
-        i*(-1); //transforma o numero em positivo
+        val= -(unsigned int )i; //transforma o numero em positivo sem ocorrer overflow
+    }
+    else {
+        val = i;
+    }
+    while ((val & (1u << e)) == 0){
+        e--;
+    }
+    unsigned int t;
+    unsigned int exp = e + 127; //bias = 127
+    if (e <= 23){
+        t = val <<(23 -e);
     }
     else{
-        bit_s =0;
+        int desloc = e - 23;
+
+        t = val >> desloc;
+
+        unsigned int resto = val & ((1u << desloc) - 1);
+        unsigned int metade = 1u << (desloc - 1);
+
+        // Arredondamento para o mais próximo, empate para par
+        if (resto > metade ||
+            (resto == metade && (t & 1))) {
+            t++;
+        }
+        if (t == (1u << 24)) {
+            t >>= 1;
+            e++;
+            exp++;
+        }
     }
-    unsigned int bin[32];
-    bin[0] = bit_s; //preenche com o bit representativo de sinal
-    int k = 1;
-    int j = 10;
-    while(i>0){
-        int r = i%2;
-        bin[j] = r;
-        bin[k]= r;
-        i = i/2;
-        k++;
-        j++;
-    }
-
-
-
+    unsigned int frac = t & 0x7fffff;;
+    unsigned int u2 = 0;
+    u2 |= (bit_s << 31);
+    u2 |= (exp << 23);
+    u2 |= frac;
+    u1.i = u2;
+    float f_convertido = u1.f;
+    return f_convertido;
 }
 
 
